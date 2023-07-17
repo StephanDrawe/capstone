@@ -1,0 +1,30 @@
+GET http://localhost:3001/account/allData
+
+###
+
+POST http://localhost:3001/account/create
+Content-Type: application/json
+
+{
+    "username": "bellybell",
+    "email": "belliestbell",
+    "password": "bellybobell"
+}
+
+###
+
+# DELETE http://localhost:3001/account/delete/:id
+
+###
+
+GET http://localhost:3001/account/login/64b08389c5768a2ee26400d6
+
+###
+
+# PATCH   http://localhost:3001//account/update/64b1dd8b32243b9b9f8871df
+# Content-Type: application/json
+
+# {
+#     "account": 200
+# }
+
