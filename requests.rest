@@ -7,24 +7,29 @@ Content-Type: application/json
 
 {
     "username": "bellybell",
-    "email": "belliestbell",
+    "email": "belliestbell@bella.com",
     "password": "bellybobell"
 }
 
 ###
 
-# DELETE http://localhost:3001/account/delete/:id
+# DELETE http://localhost:3001/account/delete/64b1dd8b32243b9b9f8871df
 
 ###
 
-GET http://localhost:3001/account/login/64b08389c5768a2ee26400d6
+GET http://localhost:3001/account/login/af@adsf.edu/ab
 
 ###
 
-# PATCH   http://localhost:3001//account/update/64b1dd8b32243b9b9f8871df
+# PATCH http://localhost:3001/account/update/64b1dd8b32243b9b9f8871df
 # Content-Type: application/json
 
 # {
-#     "account": 200
+#     "balance": 123
 # }
 
+PATCH http://localhost:3001/account/update/Bella@mit.edu/10
+
+###
+
+GET http://localhost:3001/account/transfer/Bella@mit.edu

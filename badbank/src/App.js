@@ -14,6 +14,7 @@ import { UserContext } from './Components/Context';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavBar2 } from './Components/navbar2';
 import { Logout } from './Components/logout';
+import { Transfer } from './Components/transfer';
 
 
 
@@ -25,21 +26,22 @@ function App() {
 
   return (
     <>
-      {user ? <NavBar /> : <NavBar2 />}
+    <UserContext.Provider value={value}>
+      {(user && user !== "Login failed: user not found" && user !== "Login failed: wrong password") ? <NavBar /> : <NavBar2 />}
       <div className='App'>
-      <UserContext.Provider value={value}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/createAccount' element={<CreateAccount />} />
           <Route path='/login' element={<Login />} />
           <Route path='/Deposit' element={<Deposit />} />
           <Route path='/Withdraw' element={<Withdraw />} />
+          <Route path='/Transfer' element={<Transfer />} />
           <Route path='/Balance' element={<Balance />} />
           <Route path='/allData' element={<AllData />} />
           <Route path='/logout' element={<Logout />} />
         </Routes>
-      </UserContext.Provider>
       </div>
+      </UserContext.Provider>
     </>
   );
 }

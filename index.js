@@ -28,15 +28,28 @@ app.get('/account/allData', async (req, res) => {
 
 //create account
 app.post('/account/create', (req, res) => {
-    const account = new Account({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
+
+    // check if account exists
+    Account.find({email: req.body.email}).
+    then((users) => {
+        // if user exists, return error message
+        if(users.length > 0){
+            console.log('User already in exists');
+            res.send('User already in exists');    
+        }
+        else{
+            // else create user
+            const account = new Account({
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password
+            });
+            account.save();
+            res.json(account);
+        }
+
     });
 
-    account.save();
-
-    res.json(account);
 });
 
 // //delete (not used)
@@ -46,118 +59,49 @@ app.post('/account/create', (req, res) => {
 //     res.json(result);
 // });
 
-// login
-app.get('/account/login/:id', async (req, res) => {
-    const account = await Account.findById(req.params._id);
 
+// login user 
+app.get('/account/login/:email/:password', function (req, res) {
+    Account.find({email: req.params.email}).
+        then((user) => {
+        // if user exists, check password
+            if(user.length > 0){
+                if (user[0].password === req.params.password){
+                    res.send(user[0]);
+                }
+                else{
+                    res.send('Login failed: wrong password');
+                }
+            }
+            else{
+                res.send('Login failed: user not found');
+            }
+        });
+});
+
+
+//withdraw and deposit
+app.patch('/account/update/:email/:balance', async (req, res) => {
+    const account = await Account.findOneAndUpdate({email: req.params.email}, {balance: req.params.balance}, {new: true});
+    
+    account.save();
     res.json(account);
 });
 
-// //withdraw and deposit
-// app.patch('/account/update/:id', async (req, res) => {
-//     const account = await Account.findById(req.params.id);
+// find transfer user 
+app.get('/account/transfer/:email', function (req, res) {
+    Account.find({email: req.params.email}).
+        then((user) => {
+        // if user exists, check password
+            if(user.length > 0){
+                res.send(user[0]);
+            }
+            else{
+                res.send('transfer failed: user not found');
+            }
+        });
+});
 
-//     account.balance = res.body.account;
-
-//     account.save();
-
-//     res.json(account);
-// });
-
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World')
-// })
-
-// // create user account
-// app.get('/account/create/:name/:email/:password', function (req, res) {
-
-//   // check if account exists
-//   dal.find(req.params.email).
-//       then((users) => {
-
-//           // if user exists, return error message
-//           if(users.length > 0){
-//               console.log('User already in exists');
-//               res.send('User already in exists');    
-//           }
-//           else{
-//               // else create user
-//               dal.create(req.params.name,req.params.email,req.params.password).
-//                   then((user) => {
-//                       console.log(user);
-//                       res.send(user);            
-//                   });            
-//           }
-
-//       });
-// });
-
-
-// // login user 
-// app.get('/account/login/:email/:password', function (req, res) {
-
-//   dal.find(req.params.email).
-//       then((user) => {
-
-//           // if user exists, check password
-//           if(user.length > 0){
-//               if (user[0].password === req.params.password){
-//                   res.send(user[0]);
-//               }
-//               else{
-//                   res.send('Login failed: wrong password');
-//               }
-//           }
-//           else{
-//               res.send('Login failed: user not found');
-//           }
-//   });
-  
-// });
-
-// // find user account
-// app.get('/account/find/:email', function (req, res) {
-
-//   dal.find(req.params.email).
-//       then((user) => {
-//           console.log(user);
-//           res.send(user);
-//   });
-// });
-
-// // find one user by email - alternative to find
-// app.get('/account/findOne/:email', function (req, res) {
-
-//   dal.findOne(req.params.email).
-//       then((user) => {
-//           console.log(user);
-//           res.send(user);
-//   });
-// });
-
-
-// // update - deposit/withdraw amount
-// app.get('/account/update/:email/:amount', function (req, res) {
-
-//   var amount = Number(req.params.amount);
-
-//   dal.update(req.params.email, amount).
-//       then((response) => {
-//           console.log(response);
-//           res.send(response);
-//   });    
-// });
-
-// // all accounts
-// app.get('/account/all', function (req, res) {
-
-//   dal.all().
-//       then((docs) => {
-//           console.log(docs);
-//           res.send(docs);
-//   });
-// });
 
 app.listen(port);
 console.log('Running on port: ' + port);

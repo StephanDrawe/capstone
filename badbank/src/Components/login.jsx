@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 // add later {Form, Field, ErrorMessage,}
 import { useFormik } from 'formik';
 import './styles.css'
 import { UserContext } from './Context';
-import { loginUser } from './loginUser';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = "http://localhost:3001";
+
 export function Login () {
+    const [error, setError] = useState('');
 
     // formik form
     const { values, handleChange, handleSubmit, errors, handleBlur, touched } = useFormik({
@@ -15,8 +17,8 @@ export function Login () {
             password: ''
         },
         onSubmit: values =>{
-            console.log('form:', values);
-            // alert("Login Success!");
+            // console.log('form:', values);
+            Login();
         },
         validate: values => {
             let errors = {};
@@ -29,6 +31,24 @@ export function Login () {
         }
     });
 
+
+    const Login = () => {
+        fetch(API_BASE + `/account/login/${values.email}/${values.password}`)
+            .then(res => res.text())
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    setUser(data);
+                    console.log(user);
+                    toAccount();
+                } catch(err) {
+                    console.log('Error:', text);
+                    setError(text);
+                }
+            })
+            .catch(err => console.error("Error: ", err));
+    }
+
     // user context
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
@@ -36,19 +56,10 @@ export function Login () {
         navigate("/balance")
     }
 
-    // console.log(formik.values);
 
     return (
     <>
-        <div>
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-            <button onClick={async () => {
-                const user = await loginUser();
-                setUser(user);
-                toAccount();
-                }}
-                >Login</button>
-        </div>
+        <div>{error}</div>
 
         <form 
             className='formik'

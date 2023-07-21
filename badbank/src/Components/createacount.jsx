@@ -1,5 +1,4 @@
-// import React, { useContext } from 'react';
-// import { UserContext } from './Context';
+import React, { useState } from 'react';
 // Form, Field, ErrorMessage use later
 import { useFormik } from 'formik';
 import './styles.css'
@@ -8,12 +7,9 @@ const API_BASE = "http://localhost:3001";
 
 export function CreateAccount () {
 
-    // context
-    // const { user, setUser } = useContext(UserContext);
-    // const ctx = {
-    //     "accounts": [
-    //     ]
-    // }
+    const [error, setError] = useState('');
+
+
 
     const addAccount = async () => {
         const account = await fetch(API_BASE + "/account/create", {
@@ -26,8 +22,17 @@ export function CreateAccount () {
                 email: values.email,
                 password: values.password
             })
-        }).then(res => res.json());
-        
+        }).then(res => res.text())
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                console.log(data);
+                setError('Account Created!');
+            } catch(err) {
+                setError(text);
+            }
+        })
+        .catch(err => console.error("Error: ", err));
         console.log(account);
     }
 
@@ -38,7 +43,7 @@ export function CreateAccount () {
             password: ''
         },
         onSubmit: values =>{
-            console.log('form:', values);
+            // console.log('form:', values);
             addAccount();
             // ctx.accounts.push({
             //     username: values.username, email: values.email, password: values.password, amount: 0
@@ -64,7 +69,9 @@ export function CreateAccount () {
 
     return (
         <>
-        {/* <div>{JSON.stringify(user)}</div> */}
+
+        <div>{error}</div>
+
         <form 
             className='formik'
             onSubmit={handleSubmit}>
