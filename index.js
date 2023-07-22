@@ -5,7 +5,7 @@ const cors = require('cors');
 const port = 3001;
 // var dal = require('./dal.js');
 
-app.use(express.static('badbank'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
