@@ -59,7 +59,7 @@ export function Login () {
 
     return (
     <>
-        <div>{error}</div>
+        <div className='error'>{error}</div>
 
         <form 
             className='formik'

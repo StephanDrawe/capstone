@@ -88,7 +88,7 @@ export function Transfer () {
             <h6>Current Balance:</h6>
             <div>{user?.balance || ""}</div>
 
-            <div>{error}</div>
+            <div className='error'>{error}</div>
             
             <form 
                 className='formik'
