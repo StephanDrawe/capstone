@@ -1,13 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
 const cors = require('cors');
 const port = 3001;
 // var dal = require('./dal.js');
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/badbank', {
