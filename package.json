@@ -6,8 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "dev:server": "cd public && yarn build && cd .. && yarn start",
+    "heroku-postbuild": "cd public && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "author": "SD",
   "license": "MIT",
   "dependencies": {

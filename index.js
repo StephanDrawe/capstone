@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-const port = 3001;
+const port = process.env.PORT || 3001;
 const url = "mongodb+srv://stephandrawe:okef7aob6vRzjToM@cluster0.jxgk98y.mongodb.net/?retryWrites=true&w=majority"
 // var dal = require('./dal.js');
 
@@ -11,10 +11,10 @@ const url = "mongodb+srv://stephandrawe:okef7aob6vRzjToM@cluster0.jxgk98y.mongod
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'public/build')));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public/build', 'index.html'));
 });
 
 
