@@ -18,7 +18,7 @@ app.get('/', function (req, res) {
 });
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/badbank', {
+mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
