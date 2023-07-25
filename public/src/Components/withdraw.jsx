@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = "http://localhost:3001";
 
 export function Withdraw () {
     // formik form
@@ -33,7 +32,7 @@ export function Withdraw () {
     
     // withdraw
     const Withdraw = async (updatedBalance) => {
-        fetch (API_BASE + `/account/update/${user.email}/${updatedBalance.balance}`, {
+        fetch (`/account/update/${user.email}/${updatedBalance.balance}`, {
             method: "PATCH"
         })
         .then((res) => res.json())

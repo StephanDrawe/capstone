@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = "http://localhost:3001";
+// const API_BASE = "http://localhost:3001";
 
 export function Transfer () {
 
@@ -37,7 +37,7 @@ export function Transfer () {
 
     // find transfer account
     const findAccount = (email, updatedBalance, amount) => {
-        fetch(API_BASE + `/account/transfer/${email}/`)
+        fetch(`/account/transfer/${email}/`)
             .then(res => res.text())
             .then(text => {
                 try {
@@ -56,7 +56,7 @@ export function Transfer () {
     // withdraw
     const Withdraw = async (updatedBalance, amount) => {
         updatedBalance.balance = updatedBalance.balance - Number(amount);
-        fetch (API_BASE + `/account/update/${user.email}/${updatedBalance.balance}`, {
+        fetch (`/account/update/${user.email}/${updatedBalance.balance}`, {
             method: "PATCH"
         })
         .then((res) => res.json())
@@ -66,7 +66,7 @@ export function Transfer () {
     // transfer
     const Transfer = async (data, amount) => {
         data.balance = data.balance + Number(amount);
-        fetch (API_BASE + `/account/update/${data.email}/${data.balance}`, {
+        fetch (`/account/update/${data.email}/${data.balance}`, {
             method: "PATCH"
         })
         .then((res) => res.json())

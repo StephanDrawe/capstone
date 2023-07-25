@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = "http://localhost:3001";
 
 export function Deposit () {
 
@@ -37,22 +36,12 @@ export function Deposit () {
     
     // deposit
     const Deposit = async (updatedBalance) => {
-        fetch (API_BASE + `/account/update/${user.email}/${updatedBalance.balance}`, {
+        fetch (`/account/update/${user.email}/${updatedBalance.balance}`, {
             method: "PATCH"
         })
         .then((res) => res.json())
         .catch(err => console.error("Error: ", err));
     }
-
-    // const Deposit = (updatedBalance) => {
-    //     fetch (API_BASE + `/account/update/${user.id}`, {
-    //         method: "PATCH",
-    //         body: JSON.stringify(updatedBalance)
-    //     })
-    //     .then((res) => res.json())
-    //     .then((json) => console.log(json))
-    //     .catch(err => console.error("Error: ", err));
-    // }
 
 
     // user context

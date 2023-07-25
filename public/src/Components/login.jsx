@@ -5,7 +5,6 @@ import './styles.css'
 import { UserContext } from './Context';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = "http://localhost:3001";
 
 export function Login () {
     const [error, setError] = useState('');
@@ -33,7 +32,7 @@ export function Login () {
 
 
     const Login = () => {
-        fetch(API_BASE + `/account/login/${values.email}/${values.password}`)
+        fetch(`/account/login/${values.email}/${values.password}`)
             .then(res => res.text())
             .then(text => {
                 try {

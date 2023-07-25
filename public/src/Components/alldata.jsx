@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 // import { UserContext } from "./Context"
 
-const API_BASE = "http://localhost:3001";
 
 export function AllData () {
     const [accounts, setAccounts] = useState([]);
@@ -11,7 +10,7 @@ export function AllData () {
     }, [])
 
     const GetAccounts = () => {
-        fetch(API_BASE + "/account/allData")
+        fetch("/account/allData")
             .then(res => res.json())
             .then(data => setAccounts(data))
             .catch(err => console.error("Error: ", err));

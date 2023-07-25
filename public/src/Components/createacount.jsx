@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import './styles.css'
 
-const API_BASE = "http://localhost:3001";
 
 export function CreateAccount () {
 
@@ -12,7 +11,7 @@ export function CreateAccount () {
 
 
     const addAccount = async () => {
-        const account = await fetch(API_BASE + "/account/create", {
+        const account = await fetch("/account/create", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
