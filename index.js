@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const port = 3001;
+const url = "mongodb+srv://stephandrawe:okef7aob6vRzjToM@cluster0.jxgk98y.mongodb.net/?retryWrites=true&w=majority"
 // var dal = require('./dal.js');
 
 // app.use(express.static('public'));
